@@ -18,28 +18,27 @@ import java.util.HashMap;
 public class LongestSubarraySumK {
 
     public static int longestSubarrayWithSumK(int[] nums, int k) {
-        HashMap<Integer, Integer> prefixSumMap = new HashMap<>();
+        HashMap<Integer, Integer> prefixSumIndex = new HashMap<>();
         int sum = 0, maxLength = 0;
 
         for (int i = 0; i < nums.length; i++) {
             sum += nums[i];
 
-            // Case 1: subarray starts from index 0
+            // Case 1: Subarray starts from index 0
             if (sum == k) {
                 maxLength = i + 1;
             }
 
-            // Case 2: subarray found in between
-            if (prefixSumMap.containsKey(sum - k)) {
-                maxLength = Math.max(maxLength, i - prefixSumMap.get(sum - k));
+            // Case 2: Subarray found in the middle
+            if (prefixSumIndex.containsKey(sum - k)) {
+                maxLength = Math.max(maxLength, i - prefixSumIndex.get(sum - k));
             }
 
-            // Store the first occurrence of this sum
-            if (!prefixSumMap.containsKey(sum)) {
-                prefixSumMap.put(sum, i);
+            // Store first occurrence of this sum
+            if (!prefixSumIndex.containsKey(sum)) {
+                prefixSumIndex.put(sum, i);
             }
         }
-
         return maxLength;
     }
 
